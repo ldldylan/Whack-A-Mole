@@ -1,0 +1,38 @@
+{
+  "name": "whack-a-mole",
+  "version": "1.0.0",
+  "description": "As a miner and treasure seeker, you discover abundant mineral veins in a small village. However, the mine is plagued by moles and snakes. Your job is to whack moles to collect mine or whack snakes before they bite you. Try to collect as many mines as you can within the limited time. and go to the next level.",
+  "main": "index.js",
+  "browserslist": [
+    "defaults"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch --mode=development",
+    "build": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ldldylan/Whack-A-Mole.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ldldylan/Whack-A-Mole/issues"
+  },
+  "homepage": "https://github.com/ldldylan/Whack-A-Mole#readme",
+  "dependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^9.1.2",
+    "core-js": "^3.27.2",
+    "css-loader": "^6.7.3",
+    "mini-css-extract-plugin": "^2.7.2",
+    "regenerator-runtime": "^0.13.11",
+    "sass": "^1.58.0",
+    "sass-loader": "^13.2.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
+}
