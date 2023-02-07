@@ -22,7 +22,9 @@
 //     ctx.drawImage(background,0,0, canvas.width, canvas.height);   
 // }
 
+
 window.onload = function() {
+    // 1. Initializing game elements
     const box = document.querySelector('.box');
     const score = document.querySelector('.score');
     const timebox = document.querySelector('.time');
@@ -55,6 +57,7 @@ window.onload = function() {
     // mole show up animation timer
     let upTimer = null;
 
+    // 2. Start game after clicking the start button
     startButton.onclick = function(){
         // hide start button after clicked
         this.style.display = 'None';
@@ -65,7 +68,7 @@ window.onload = function() {
         // display mole
         showMole();
     }
-
+    // 3. Start game timer
     function timeReduce(){
         timer = setInterval(function (){
             timeboxWidth--;
@@ -78,7 +81,7 @@ window.onload = function() {
         }, 50)
     }
 
-    // 4 game over
+    // 4. game over
     function gameover() {
         restartButton.style.display="block";
         gameoverBox.style.display="block";
@@ -87,7 +90,7 @@ window.onload = function() {
         clearInterval(moleTimer)
         alert("Game over!")
     }
-    // 5 pause game
+    // 5. pause game
     pauseButton.onclick = function(){
         if(gameState) {
             // pause game timer
@@ -107,7 +110,7 @@ window.onload = function() {
             gamestate = true;
         }
     }
-    // 6 generate mole
+    // 6. generate mole
     function addMole() {
       // create imge
       let mole = document.createElement("img");
