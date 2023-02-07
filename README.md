@@ -49,6 +49,6 @@ In Whack A Mole, user will be able to:
 * Tuesday
     * Implement sound effects and music feature 
 * Wednesday
-    * Testing and debug
+    * Testing and debugging
 * Thursday Morning
-
+    * Deploying on GitHub Pages
