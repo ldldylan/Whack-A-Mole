@@ -33,6 +33,7 @@ window.onload = function() {
     const restartButton = document.querySelector('.restart');
     const gameoverBox = document.querySelector(".gameover");
     let current_score = 0;
+    
 
     let timer = null;
     let timeboxWidth = timebox.offsetWidth
@@ -40,7 +41,7 @@ window.onload = function() {
     // ture => game has started; false => game is paused
     let gameState = true;
 
-    // seven positions for mole to show up [{}{}{}{}{}{}{}]
+    // seven positions for moles to show up [{}{}{}{}{}{}{}]
     let sevenMolesPos = [
       {top: "11%", left: "5.5%"},
       {top: "8%", left: "24.5%"},
@@ -51,7 +52,17 @@ window.onload = function() {
       {top: "41%", left: "42.5%"}
     ];
 
-    // seven positions for whack to show up
+    // seven positions for snakes to show up
+    let sevenSnakePos = [
+      {top: "6%", left: "5.5%"},
+      {top: "2.4%", left: "24.5%"},
+      {top: "6%", left: "44.5%"},
+      {top: "20.5%", left: "26.5%"},
+      {top: "21.5%", left: "50.5%"},
+      {top: "34.2%", left: "8.5%"},
+      {top: "36%", left: "42.5%"}
+    ];
+
 
     // previous hole index
     let prevIndex = -1;
@@ -129,7 +140,18 @@ window.onload = function() {
     async function addMole() {
       // create imge
       let mole = document.createElement("img");
-      // i. which random hole
+      // i. mole or snake
+      mole.who = ''
+      let randomNumber = Math.floor(Math.random()*10)
+      if (randomNumber === 0) {
+        mole.who = 's';
+      }
+      else if (randomNumber === 9){
+        mole.who = 'f';
+      }
+      else mole.who = 'm';
+
+      // ii. which hole
       // generate a random index 0-7
       mole.holeIndex = Math.floor(Math.random()*7);
       // ensure no repetitive hole position
@@ -139,30 +161,26 @@ window.onload = function() {
       prevIndex = mole.holeIndex;
       // 7. holes locations
       // assign hole pos to mole
-      mole.style.top = sevenMolesPos[mole.holeIndex].top
-      mole.style.left = sevenMolesPos[mole.holeIndex].left
+      if (mole.who === 'm' || mole.who === 'f') {
+        mole.style.top = sevenMolesPos[mole.holeIndex].top
+        mole.style.left = sevenMolesPos[mole.holeIndex].left
+      }
+      // assign hole pos to snake
+      else if (mole.who === 's') {
+        mole.style.top = sevenSnakePos[mole.holeIndex].top
+        mole.style.left = sevenSnakePos[mole.holeIndex].left
+      }
       // add mole image
       // mole.src="img/m1.png"
       
-      // ii. mole or snake
-      mole.who = ''
-      let randomNumber = Math.floor(Math.random()*10)
-      if (randomNumber === 0) {
-        mole.who = 's';
-      }
-      else if (randomNumber === 1){
-        mole.who = 'f';
-      }
-      else mole.who = 'm';
       console.log(`${mole.who} is at hole ${mole.holeIndex}`)
-      
       box.appendChild(mole);
       console.log(box.children)
       // showing up
       let upIndex = 0;
       upTimer = setInterval(function(){
         if (mole.who === 'm' || mole.who === 'f'){
-          mole.src = "img/" + mole.who + upIndex+".png";
+          mole.src = "img/" + mole.who + upIndex + ".png";
           upIndex++;
           if (mole.who==='m' && upIndex > 1){
             setTimeout(function(){}, 80)
@@ -176,15 +194,20 @@ window.onload = function() {
             clearInterval(upTimer);
           }
         }
-      }, 80)
+        else {
+          mole.src = "img/s" + upIndex + ".png";
+          upIndex++;
+          if (upIndex > 2) {
+            clearInterval(upTimer);
+          }
+        }
+      }, 100)
 
       // Going down
       let downIndex = 1 
-      if (mole.who==='m'){
-        // let clicked = false || whack(mole);
-
-        // let moel stays for 1 sec
+      if (mole.who === 'm'){
         await whack(mole);
+        // let moel stays for 1 sec
         mole.out = setTimeout(function(){
           downTimer = setInterval(function(){
             mole.src = "img/m" + downIndex + ".png";
@@ -198,14 +221,12 @@ window.onload = function() {
           }, 80)
         }, 1000)
       }
-      else if (mole.who==='f'){
+      else if (mole.who === 'f'){
         downIndex = 2;
-        // let clicked = false || whack(mole);
-
         await whack(mole);
         mole.out = setTimeout(function(){
           downTimer = setInterval(function(){
-            mole.src = "img/" + mole.who + downIndex + ".png";
+            mole.src = "img/f" + downIndex + ".png";
             downIndex --;
             if (downIndex < 0){
               clearInterval(downTimer);
@@ -214,6 +235,25 @@ window.onload = function() {
               box.removeChild(mole);
             }
           }, 80)
+        }, 1000)
+      }
+      else if (mole.who === 's'){
+        downIndex = 1;
+        await whack(mole);
+        mole.out = setTimeout(function(){
+          downTimer = setInterval(function(){
+            mole.src = "img/s4.png";
+            downIndex --;
+            // snake bite sound
+            const snakeSound= new Audio("audio/snake-attack.mp3");
+            snakeSound.play();
+            if (downIndex < 0){
+              clearInterval(downTimer);
+              clearInterval(mole.out);
+              // delete mole element from box
+              box.removeChild(mole);
+            }
+          }, 200)
         }, 1000)
       }
     }
@@ -228,11 +268,8 @@ window.onload = function() {
     async function whack(mole) {
       mole.onclick = async function() {
         // close downTimer before whacking
-        // clearInterval(mole.out)
-        // clearInterval(downTimer)
-        // whack timer
-        let whackTimer = null;
-        let hitTimer = null;
+        clearInterval(mole.out)
+        clearInterval(downTimer)
         
         await whackAnimation(mole);
         if (mole.who === 'm'){
@@ -249,45 +286,75 @@ window.onload = function() {
           current_score -= 10;
         }
         score.innerHTML = current_score;
-        // return true;
       } 
     }
-    // let whackTimer = null;
-    // let hitTimer = null;
+
     async function whackAnimation(mole){
       let hit = document.createElement("img")
       hit.style.top = sevenMolesPos[mole.holeIndex].top
       hit.style.left = sevenMolesPos[mole.holeIndex].left
       box.appendChild(hit)
-
-      if (mole.who === 'm'){
-        mole.src = "img/m1" + mole.mineIndex + ".png";
-      }
-      else if (mole.who === 'f'){
-        mole.src = "img/f2" + ".png";
-      }
+      
       let hitIndex = 0; 
       hitTimer = setInterval(function(){
       hit.src = "img/w" + hitIndex + ".png";
       hitIndex++;
-        if (hasSound && hitIndex === 2 && (mole.who === 'm') || (mole.who === 's')) {
+        // play whack sound effect 
+        if (hasSound && hitIndex === 2 && (mole.who === 'm' || mole.who === 's')) {
           const hitSound = new Audio("audio/whack.mp3");
           hitSound.play();
         }
-        else if (hasSound && hitIndex === 2 && (mole.who === 'f')) {
+        else if (hasSound && hitIndex === 2 && mole.who === 'f') {
           const hitSound = new Audio("audio/wrong-whack.mp3");
           hitSound.play();
         }
+
         if (hitIndex > 5) {
-          console.log(box.children)
           clearInterval(hitTimer);
-          clearInterval(mole.out);
-          clearInterval(downTimer);
+          // clearInterval(mole.out);
+          // clearInterval(downTimer);
           box.removeChild(hit);
-          // console.log(box);
-          box.removeChild(mole);
+          if (mole.who === 'm'){
+            mole.hurt = setTimeout(function() {
+            mole.src = "img/m2.png";
+            let hurtIndex = 0
+            hurtTimer = setInterval(function(){
+              mole.src = "img/m1" + mole.mineIndex + hurtIndex + ".png"
+              hurtIndex++;
+              if (hurtIndex > 4) {
+                clearInterval(hurtTimer);
+                clearInterval(mole.hurt);
+                box.removeChild(mole);
+              }
+              }, 100)
+            }, 50)
+          }
+          else if (mole.who === 'f'){
+            let hurtIndex = 0
+            hurtTimer = setInterval(function(){
+              mole.src = "img/f3.png";
+              hurtIndex++;
+              if (hurtIndex > 1){
+                clearInterval(hurtTimer);
+                box.removeChild(mole);
+              }
+            }, 100)
+          }
+          else if (mole.who === 's') {
+            let hurtIndex = 0
+            hurtTimer = setInterval(function(){
+              mole.src = "img/s3.png";
+              hurtIndex++;
+              if (hurtIndex > 1){
+                clearInterval(hurtTimer);
+                box.removeChild(mole);
+              }
+            }, 100)
+          }
         }
       }, 80)
+
+
     }
 }
 
