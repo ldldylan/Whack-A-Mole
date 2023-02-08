@@ -2,7 +2,7 @@
 #### A JavaScript game built on the classic arcade game Whack A Mole!<img src="https://s2.loli.net/2023/02/03/K1EcOexajhCWzIM.webp" >
 
 ## Background 
-As a miner and treasure seeker, you discover abundant mineral veins in a small village. However, the mine is plagued by moles and snakes. Your job is to whack moles to collect mine or whack snakes before they bite you. Try to collect as many mines as you can within the limited time. and go to the next level.  
+As a miner and treasure seeker, you discover abundant mineral veins in a small village. However, the mine is plagued by moles and snakes. Your job is to whack moles to collect mine or whack snakes before they bite you. Try to collect as many mines as you can within the limited time and challenge yourself.  
 
 ## Functionality & MVPs
 In Whack A Mole, user will be able to:
