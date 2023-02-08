@@ -200,7 +200,7 @@ window.onload = function() {
         downIndex = 2;
         mole.out = setTimeout(function(){
           downTimer = setInterval(function(){
-            mole.src = "../img/" + mole.who + downIndex + ".png";
+            mole.src = "img/" + mole.who + downIndex + ".png";
             downIndex --;
             if (downIndex < 0){
               clearInterval(downTimer);
