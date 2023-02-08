@@ -51,7 +51,7 @@ window.onload = function() {
       {top: "41%", left: "42.5%"}
     ];
 
-    // seven positions for shovel to show up
+    // seven positions for whack to show up
 
     // previous hole index
     let prevIndex = -1;
@@ -61,7 +61,16 @@ window.onload = function() {
     let upTimer = null;
     // mole goes down 
     let downTimer = null;
-   
+
+    // sound effect 
+    let hasSound = true;
+    // background music
+    // let hasBGM = true;
+    // const BGM = new Audio("../audio/BGM.mp3");
+    // BGM.loop = true;
+    // BGM.play();
+
+    
 
     // 2. Start game after clicking the start button
     startButton.onclick = function(){
@@ -129,23 +138,23 @@ window.onload = function() {
       }
       prevIndex = mole.holeIndex;
       // 7. holes locations
-      console.log(sevenMolesPos[mole.holeIndex])
       // assign hole pos to mole
       mole.style.top = sevenMolesPos[mole.holeIndex].top
       mole.style.left = sevenMolesPos[mole.holeIndex].left
       // add mole image
       // mole.src="../img/m1.png"
-
+      
       // ii. mole or snake
       mole.who = ''
       let randomNumber = Math.floor(Math.random()*10)
       if (randomNumber === 0) {
         mole.who = 's';
       }
-      // else if (randomNumber === 1){
-      //   mole.who = 'f';
-      // }
+      else if (randomNumber === 1){
+        mole.who = 'f';
+      }
       else mole.who = 'm';
+      console.log(`${mole.who} is at hole ${mole.holeIndex}`)
 
       box.appendChild(mole);
       // showing up
@@ -213,12 +222,19 @@ window.onload = function() {
     }
     // 8. whack a mole
     function whack(mole) {
-      mole.onclick = function() {
+      mole.onclick = async function() {
         // close downTimer before whacking
         // clearInterval(mole.out)
         // clearInterval(downTimer)
-
-        whackAnimation(mole);
+        // whack timer
+        let whackTimer = null;
+        let hitTimer = null;
+        // let whack = document.createElement("img");
+        // whack.style.top = sevenMolesPos[mole.holeIndex].top;
+        // whack.style.left = sevenMolesPos[mole.holeIndex].left;
+        // box.appendChild(whack);
+        
+        await whackAnimation(mole);
         if (mole.who === 'm'){
           
           switch(mole.mineIndex) {
@@ -235,49 +251,41 @@ window.onload = function() {
         score.innerHTML = current_score;
       } 
     }
-    // whack timer
-    let whackTimer = null;
-    let hitTimer = null;
-
+    // let whackTimer = null;
+    // let hitTimer = null;
     async function whackAnimation(mole){
       let whack = document.createElement("img")
       whack.style.top = sevenMolesPos[mole.holeIndex].top
       whack.style.left = sevenMolesPos[mole.holeIndex].left
       box.appendChild(whack)
 
-      // mole.whack = setTimeout(function() {
+      if (mole.who === 'm'){
         mole.src = "../img/m1" + mole.mineIndex + ".png";
-        let whackIndex = 0; 
-        whackTimer = setInterval(function(){
-          console.log("whackIndex:" + whackIndex)
-            whack.src = "../img/w" + whackIndex + ".png";
-            whackIndex++;
-            if (whackIndex >= 2) {
-              clearInterval(whackTimer);
-              // box.removeChild(whack);
-            }
-          }, 250)
-          hitAnimation(whack)
-          let hitIndex = 0;
-          
-          // }, 2000)
+      }
+      else if (mole.who === 'f'){
+        mole.src = "../img/f2" + ".png";
+      }
+      let whackIndex = 0; 
+      whackTimer = setInterval(function(){
+      whack.src = "../img/w" + whackIndex + ".png";
+      whackIndex++;
+      // console.log("whackIndex:" + whackIndex)
+        if (hasSound && whackIndex === 2 && (mole.who === 'm') || (mole.who === 's')) {
+          const whackSound = new Audio("../audio/whack.mp3");
+          whackSound.play();
         }
-        
-    async function hitAnimation(whack) {
-      hitTimer = setInterval(function() {
-        console.log("hitIndex: " + hitIndex)
-        whack.src = "../img/h" + hitIndex + ".png";
-        hitIndex++;
-        // console.log("hitIndex2: " + hitIndex)
-        if (hitIndex >= 2){
-          clearInterval(hitTimer);
+        else if (hasSound && whackIndex === 2 && (mole.who === 'f')) {
+          const whackSound = new Audio("../audio/wrong-whack.mp3");
+          whackSound.play();
+        }
+        if (whackIndex > 5) {
+          clearInterval(whackTimer);
           box.removeChild(whack);
           clearInterval(mole.out);
           clearInterval(downTimer);
           box.removeChild(mole);
-        // clearInterval(mole.whack);
-      }
-    }, 200)
+        }
+      }, 80)
     }
 }
 
