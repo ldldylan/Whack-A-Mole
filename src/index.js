@@ -5,19 +5,19 @@
 // const ctx = canvas.getContext('2d');
 
 // var bgImg = new Image();
-// bgImg.src = "../img/background.png";
+// bgImg.src = "img/background.png";
 // bgImg.onload = function() {
 //   ctx.drawImage(bgImg, 110, 200);
 // }
 
 // var img = new Image();
-// img.src = "../img/sprite8.png";
+// img.src = "img/sprite8.png";
 // img.onload = function(){
 //     ctx.drawImage(img, 140, 200);
 // };
 
 // const background = new Image();
-// background.src = '../img/background.bmp';
+// background.src = 'img/background.bmp';
 // background.onload = function(){
 //     ctx.drawImage(background,0,0, canvas.width, canvas.height);   
 // }
@@ -66,7 +66,7 @@ window.onload = function() {
     let hasSound = true;
     // background music
     // let hasBGM = true;
-    // const BGM = new Audio("../audio/BGM.mp3");
+    // const BGM = new Audio("audio/BGM.mp3");
     // BGM.loop = true;
     // BGM.play();
 
@@ -113,7 +113,7 @@ window.onload = function() {
             // pause generating mole
             clearInterval(moleTimer);
             // pause button => continue button
-            this.style.backgroundImage="url(../img/restart.png)"
+            this.style.backgroundImage="url(img/restart.png)"
             gameState = false;
           }
           else{
@@ -121,7 +121,7 @@ window.onload = function() {
             timeReduce();
             showMole();
             // start button => pause button
-            this.style.backgroundImage="url(../img/pause.png)"
+            this.style.backgroundImage="url(img/pause.png)"
             gamestate = true;
         }
     }
@@ -142,7 +142,7 @@ window.onload = function() {
       mole.style.top = sevenMolesPos[mole.holeIndex].top
       mole.style.left = sevenMolesPos[mole.holeIndex].left
       // add mole image
-      // mole.src="../img/m1.png"
+      // mole.src="img/m1.png"
       
       // ii. mole or snake
       mole.who = ''
@@ -161,17 +161,17 @@ window.onload = function() {
       let upIndex = 0;
       upTimer = setInterval(function(){
         if (mole.who === 'm' || mole.who === 'f'){
-          mole.src = "../img/" + mole.who + upIndex+".png";
+          mole.src = "img/" + mole.who + upIndex+".png";
           upIndex++;
           if (mole.who==='m' && upIndex > 1){
             setTimeout(function(){}, 80)
             mole.mineIndex = Math.floor(Math.random()*7);
-            mole.src = "../img/m1" + mole.mineIndex + ".png";
+            mole.src = "img/m1" + mole.mineIndex + ".png";
             clearInterval(upTimer);
           }
           else if(mole.who==='f' && upIndex > 1){
             setTimeout(function(){}, 80)
-            mole.src = "../img/f2.png";
+            mole.src = "img/f2.png";
             clearInterval(upTimer);
           }
         }
@@ -185,7 +185,7 @@ window.onload = function() {
         // let moel stays for 1 sec
         mole.out = setTimeout(function(){
           downTimer = setInterval(function(){
-            mole.src = "../img/m" + downIndex + ".png";
+            mole.src = "img/m" + downIndex + ".png";
             downIndex --;
             if (downIndex < 0){
               clearInterval(downTimer);
@@ -260,22 +260,22 @@ window.onload = function() {
       box.appendChild(whack)
 
       if (mole.who === 'm'){
-        mole.src = "../img/m1" + mole.mineIndex + ".png";
+        mole.src = "img/m1" + mole.mineIndex + ".png";
       }
       else if (mole.who === 'f'){
-        mole.src = "../img/f2" + ".png";
+        mole.src = "img/f2" + ".png";
       }
       let whackIndex = 0; 
       whackTimer = setInterval(function(){
-      whack.src = "../img/w" + whackIndex + ".png";
+      whack.src = "img/w" + whackIndex + ".png";
       whackIndex++;
       // console.log("whackIndex:" + whackIndex)
         if (hasSound && whackIndex === 2 && (mole.who === 'm') || (mole.who === 's')) {
-          const whackSound = new Audio("../audio/whack.mp3");
+          const whackSound = new Audio("audio/whack.mp3");
           whackSound.play();
         }
         else if (hasSound && whackIndex === 2 && (mole.who === 'f')) {
-          const whackSound = new Audio("../audio/wrong-whack.mp3");
+          const whackSound = new Audio("audio/wrong-whack.mp3");
           whackSound.play();
         }
         if (whackIndex > 5) {
