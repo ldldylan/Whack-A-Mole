@@ -8,7 +8,7 @@ let hasSound = false;
 
 window.onload = function() {
     // 1. Initializing game elements
-    const splash = document.querySelector('splash')
+    const splash = document.querySelector('.splash')
     const box = document.querySelector('.box');
     const showScore = document.querySelector('.score');
     const showBestScore = document.querySelector('.best_score');
@@ -30,12 +30,15 @@ window.onload = function() {
     const pauseButton = document.querySelector('.pause');
     const resumeButton = document.querySelector('.resume');
     const restartButton = document.querySelector('.restart');
+    // -------------------------------------------------------------
     const gameoverBox = document.querySelector('.gameover');
+    const finalScore = document.querySelector('.final_score');
+    const finalMaxCombo = document.querySelector('.final_max_combo');
 
-    const unmuteSoundButton = document.querySelector(".unmute-sound")
-    const unmuteMusicButton = document.querySelector(".unmute-music")
-    const muteSoundButton = document.querySelector(".mute-sound")
-    const muteMusicButton = document.querySelector(".mute-music")
+    const unmuteSoundButton = document.querySelector(".unmute-sound");
+    const unmuteMusicButton = document.querySelector(".unmute-music");
+    const muteSoundButton = document.querySelector(".mute-sound");
+    const muteMusicButton = document.querySelector(".mute-music");
 
 
     let timer = null;
@@ -122,7 +125,8 @@ window.onload = function() {
     // 2. Start game after clicking the start button
     startButton.onclick = function(){
         // hide start button after clicked
-        this.style.display = 'None';
+        startButton.style.display = 'none';
+        splash.style.display = 'none';
         // show pause button
         pauseButton.style.display = 'block';
         // start timer
@@ -152,54 +156,57 @@ window.onload = function() {
                 clearInterval(moleTimer);
                 clearInterval(downTimer);
                 // gamer over
+                gameoverBox.style.display = "block";
+                finalScore.innerHTML = currentScore;
+                finalMaxCombo.innerHTML = maxCombo;
                 gameover();
             }
-        }, 300)
+        }, 336) //336 for a min
     }
 
     // 4. game over
     function gameover() {
-        restartButton.style.display = "block";
-        pauseButton.style.display = 'none';
-        gameoverBox.style.display = "block";
-        
-        // while (box.firstChild){
-          // console.log(box.array)
-          // console.log(box.lastChild.nodeName)
-          // box.removeChild(box.firstChild);
-        // }
-        // console.log(box.hasChildNodes("IMG"))
-        
-        if (currentScore > bestScore) {
-          bestScore = currentScore;
-          showBestScore.innerHTML = bestScore;
+      
+      pauseButton.style.display = 'none';
+      restartButton.style.display = "block";
+      
+      // while (box.firstChild){
+        // console.log(box.array)
+        // console.log(box.lastChild.nodeName)
+        // box.removeChild(box.firstChild);
+      // }
+      // console.log(box.hasChildNodes("IMG"))
+      
+      if (currentScore > bestScore) {
+        bestScore = currentScore;
+        showBestScore.innerHTML = bestScore;
+      }
+      if (currentScore > 5000 || combo > 30) {
+        if (hasSound) {
+          const victorySound = new Audio("audio/victory.mp3");
+          victorySound.play();
         }
-        if (currentScore > 5000 || combo > 30) {
-          if (hasSound) {
-            const victorySound = new Audio("audio/victory.mp3");
-            victorySound.play();
-          }
-        }
-        // stop generaing any mole
-        clearInterval(moleTimer);
-        // stop hiding 
-        // clearInterval(mole.out);
-        clearInterval(downTimer);
-        // clean all child node in box
+      }
+      // stop generaing any mole
+      clearInterval(moleTimer);
+      // stop hiding 
+      // clearInterval(mole.out);
+      clearInterval(downTimer);
+      // clean all child node in box
 
-        // for (let i = box.children.length - 1; i > 0 ;i--) {
-        //   if (box.children[i].nodeName === 'IMG'){
-        //     // console.log(".......................")
-        //     // console.log(box.children)
-        //     // console.log('11111111111111111')
-        //     box.removeChild(box.children[i]);
-        //     // console.log(box.childNodes[i])
-        //     // console.log(box.children)
-        //   }
-        // }
-        
-        // alert("Game over!")
-        restart()
+      // for (let i = box.children.length - 1; i > 0 ;i--) {
+      //   if (box.children[i].nodeName === 'IMG'){
+      //     // console.log(".......................")
+      //     // console.log(box.children)
+      //     // console.log('11111111111111111')
+      //     box.removeChild(box.children[i]);
+      //     // console.log(box.childNodes[i])
+      //     // console.log(box.children)
+      //   }
+      // }
+      
+      // alert("Game over!")
+      restart()
     }
     // 5. pause game
     pauseButton.onclick = function(){
@@ -499,7 +506,7 @@ window.onload = function() {
     function restart() {
       restartButton.onclick = function() {
         // hide restart button 
-        this.style.display = 'none';
+        restartButton.style.display = 'none';
         pauseButton.style.display = 'block';
         gameoverBox.style.display = 'none';
         // refill timer and HP bars

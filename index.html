@@ -21,7 +21,24 @@
     <div class="box">
       <!-- <canvas id="canvas" width="1280px", height="960px">Your browser does not support the canvas element. Please upgrade yoru browser or use Chrome.
       </canvas> -->
-      <div class="splash"></div>
+      <div class="splash">
+        <div class="start"></div>
+        <p class="story">As a miner and treasure seeker, you discover abundant mineral veins in a small village. However, the mine is plagued by moles and snakes. </p>
+        <p class="instruction">Use the mouse clicking to whack a male mole to collect mine or treasure to get scores. More combos more scores! Never whack on a female mole who carries nothing, or you would lose some scores and your combos would become 0. Whack a snake before it bites you and reduces your HP. Game over once time up or HP reduce to 0. Try to collect as many mines as you can within the limited time and challenge yourself.</p>
+        <div class="hit_male"></div>
+        <div class="hide_male"></div>
+        <div class="hide_female"></div>
+        <div class="hit_female"></div>
+        <div class="hit_snake"></div>
+        <div class="miss_snake"></div>
+        <div class="mark1">√</div>
+        <div class="mark2">×</div>
+        <div class="mark3">√</div>
+        <div class="mark4">×</div>
+        <div class="mark5">√</div>
+        <div class="mark6">×</div>
+      </div>
+        
       <div class="HP_label">HP</div>
       <div class="HP_img"></div>
       <div class="HP"></div>
@@ -54,8 +71,6 @@
       <div class="diamond">0</div>
       <div class="treasure_label">treasure</div>
       <div class="treasure">0</div>
-
-      <div class="start"></div>
       <div class="pause"></div>
       <div class="resume"></div>
       <div class="restart"></div>
@@ -63,17 +78,23 @@
       <div class="unmute-music"></div>
       <div class="mute-sound"></div>
       <div class="mute-music"></div>
-      <div class="github-icon"><a href="https://github.com/ldldylan/Whack-A-Mole/"><img src="img/github-icon.png" </a></div>
-      <div class="linkedin-icon"><a href="https://www.linkedin.com/in/dilanglin/"><img src="img/linkedin-icon.png" </a></div>
+      <div class="github-icon"><a href="https://github.com/ldldylan/Whack-A-Mole/" target="_blank"><img src="img/github-icon.png"> </a></div>
+      <div class="linkedin-icon"><a href="https://www.linkedin.com/in/dilanglin/" target="_blank"><img src="img/linkedin-icon.png"> </a></div>
       <!-- <img src="../img/m2.png"> -->
       <!-- <img id="shovel" src="img/w2.png"> -->
       <!-- <img src="img/s3.png"> -->
       <!-- <img src="../img/m103.png"> -->
+      <!-- ------------------------------Game Over Page -------------------------------------------------->
+      <div class="gameover">
+        <div class="final_score_label">final score</div> 
+        <div class="final_score">0</div>
+        <div class="gameover_message">Game over!</div>
+        <div class="final_max_combo_label">max combo</div>
+        <div class="final_max_combo">0</div>
+      </div>
+      <div class="restart"></div>
     </div>
 
-    <!-- ------------------------------Game Over Page -------------------------------------------------->
-    <div class="gameover"></div>
-    <div class="restart"></div>
   </body>
 
 </html>
