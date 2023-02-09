@@ -1,43 +1,48 @@
-// const cursor = document.querySelector('.cursor')
+const { async } = require("regenerator-runtime");
 
-// const canvas = document.getElementById("canvas");
-// console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-// const ctx = canvas.getContext('2d');
-
-// var bgImg = new Image();
-// bgImg.src = "img/background.png";
-// bgImg.onload = function() {
-//   ctx.drawImage(bgImg, 110, 200);
-// }
-
-// var img = new Image();
-// img.src = "img/sprite8.png";
-// img.onload = function(){
-//     ctx.drawImage(img, 140, 200);
-// };
-
-// const background = new Image();
-// background.src = 'img/background.bmp';
-// background.onload = function(){
-//     ctx.drawImage(background,0,0, canvas.width, canvas.height);   
-// }
-
-
+let bestScore = 0;
 window.onload = function() {
     // 1. Initializing game elements
     const box = document.querySelector('.box');
-    const score = document.querySelector('.score');
+    const showScore = document.querySelector('.score');
+    const showBestScore = document.querySelector('.best_score');
+    const showMaxCombo = document.querySelector('.max_combo');
+    const showCombo = document.querySelector('.combo');
     const timebox = document.querySelector('.time');
-    const pauseButton = document.querySelector('.pause');
+    const HPbox = document.querySelector('.HP')
+
+    // Mine
+    const showIron = document.querySelector(".iron")
+    const showCopper = document.querySelector(".copper")
+    const showRuby = document.querySelector(".ruby")
+    const showBlackGem = document.querySelector(".black_gem")
+    const showSapphire = document.querySelector(".sapphire")
+    const showDiamond = document.querySelector(".diamond")
+    const showTreasure = document.querySelector(".treasure")
+
     const startButton = document.querySelector('.start');
+    const pauseButton = document.querySelector('.pause');
+    const resumeButton = document.querySelector('resume');
     const restartButton = document.querySelector('.restart');
-    const gameoverBox = document.querySelector(".gameover");
-    let current_score = 0;
-    
+    const gameoverBox = document.querySelector('.gameover');
 
     let timer = null;
-    let timeboxWidth = timebox.offsetWidth
-    console.log(timeboxWidth)
+    let timeboxWidth = timebox.offsetWidth;
+    let HPboxWidth = HPbox.offsetWidth;
+
+    let currentScore = 0;
+    let maxCombo = 0;
+    let combo = 0;
+    showBestScore.innerHTML = bestScore;
+
+    let iron = 0;
+    let copper = 0;
+    let ruby = 0;
+    let blackGem = 0;
+    let sapphire = 0;
+    let diamond = 0;
+    let treasure = 0;
+
     // ture => game has started; false => game is paused
     let gameState = true;
 
@@ -99,12 +104,22 @@ window.onload = function() {
         timer = setInterval(function (){
             timeboxWidth--;
             timebox.style.width = timeboxWidth + "px";
-            if (timeboxWidth <= 0){
+            HPbox.style.width = HPboxWidth + "px";
+            if (currentScore >= bestScore) {
+              bestScore = currentScore;
+              showBestScore.innerHTML = bestScore;
+            }
+            if (timeboxWidth <= 0 || HPboxWidth <= 0){
+                if (HPboxWidth <= 0)HPbox.style.width = 0 + 'px';
                 clearInterval(timer);
+
+
+                clearInterval(moleTimer);
+                clearInterval(downTimer);
                 // gamer over
                 gameover();
             }
-        }, 50)
+        }, 300)
     }
 
     // 4. game over
@@ -112,9 +127,37 @@ window.onload = function() {
         restartButton.style.display="block";
         gameoverBox.style.display="block";
         
-        //stop generaing any mole
-        clearInterval(moleTimer)
-        alert("Game over!")
+        // while (box.firstChild){
+          // console.log(box.array)
+          // console.log(box.lastChild.nodeName)
+          // box.removeChild(box.firstChild);
+        // }
+        // console.log(box.hasChildNodes("IMG"))
+        
+        if (currentScore > bestScore) {
+          bestScore = currentScore;
+          showBestScore.innerHTML = bestScore;
+        }
+        // stop generaing any mole
+        clearInterval(moleTimer);
+        // stop hiding 
+        // clearInterval(mole.out);
+        clearInterval(downTimer);
+        // clean all child node in box
+
+        // for (let i = box.children.length - 1; i > 0 ;i--) {
+        //   if (box.children[i].nodeName === 'IMG'){
+        //     // console.log(".......................")
+        //     // console.log(box.children)
+        //     // console.log('11111111111111111')
+        //     box.removeChild(box.children[i]);
+        //     // console.log(box.childNodes[i])
+        //     // console.log(box.children)
+        //   }
+        // }
+        
+        // alert("Game over!")
+        restart()
     }
     // 5. pause game
     pauseButton.onclick = function(){
@@ -124,7 +167,7 @@ window.onload = function() {
             // pause generating mole
             clearInterval(moleTimer);
             // pause button => continue button
-            this.style.backgroundImage="url(img/restart.png)"
+            this.style.backgroundImage="url(img/resume.png)"
             gameState = false;
           }
           else{
@@ -173,9 +216,11 @@ window.onload = function() {
       // add mole image
       // mole.src="img/m1.png"
       
-      console.log(`${mole.who} is at hole ${mole.holeIndex}`)
+      // console.log(`${mole.who} is at hole ${mole.holeIndex}`)
+      
       box.appendChild(mole);
-      console.log(box.children)
+      // console.log(box.children)
+
       // showing up
       let upIndex = 0;
       upTimer = setInterval(function(){
@@ -216,7 +261,11 @@ window.onload = function() {
               clearInterval(downTimer);
               clearInterval(mole.out);
               // delete mole element from box
-              box.removeChild(mole);
+              if (box.hasChildNodes(mole)){
+                box.removeChild(mole);
+              }
+              combo = 0;
+              showCombo.innerHTML = combo; 
             }
           }, 80)
         }, 1000)
@@ -248,10 +297,14 @@ window.onload = function() {
             const snakeSound= new Audio("audio/snake-attack.mp3");
             snakeSound.play();
             if (downIndex < 0){
+              HPboxWidth -= 68;
+              HPbox.style.width = HPboxWidth + 'px';
               clearInterval(downTimer);
               clearInterval(mole.out);
               // delete mole element from box
               box.removeChild(mole);
+              combo = 0;
+              showCombo.innerHTML = combo; 
             }
           }, 200)
         }, 1000)
@@ -259,9 +312,9 @@ window.onload = function() {
     }
 
     // gennerate many moles
-    function showMole() {
-      moleTimer = setInterval(function(){
-        addMole()
+    async function showMole() {
+      moleTimer = setInterval(async function(){
+        await addMole()
       }, 1000)
     }
     // 8. whack a mole
@@ -274,18 +327,59 @@ window.onload = function() {
         await whackAnimation(mole);
         if (mole.who === 'm'){
           
+          combo += 1;
           switch(mole.mineIndex) {
             case 0:
-              current_score += 5
+              iron += 1;
+              showIron.innerHTML = iron;
+              currentScore += 5 * (1 + Math.floor(combo/3));
               break;
-            
+            case 1:
+              copper += 1;
+              showCopper.innerHTML = copper;
+              currentScore += 10 * (1 + Math.floor(combo/3));
+              break;
+            case 2:
+              ruby += 1;
+              showRuby.innerHTML = ruby;
+              currentScore += 15 * (1 + Math.floor(combo/3));
+              break;
+            case 3:
+              blackGem += 1;
+              showBlackGem.innerHTML = blackGem;
+              currentScore += 20 * (1 + Math.floor(combo/3));
+              break;
+            case 4:
+              sapphire += 1;
+              showSapphire.innerHTML = sapphire;
+              currentScore += 25 * (1 + Math.floor(combo/3));
+              break;
+            case 5:
+              diamond += 1;
+              showDiamond.innerHTML = diamond;
+              currentScore += 30 * (1 + Math.floor(combo/3));
+              break;
+            case 6:
+              treasure += 1;
+              showTreasure.innerHTML = treasure;
+              currentScore += 40 * (1 + Math.floor(combo/3));
+              break;
           }
-          current_score += 10;
         }
         else if(mole.who === 'f'){
-          current_score -= 10;
+          currentScore -= 10 * (1 + Math.floor(combo/3));
+          combo = 0;
         }
-        score.innerHTML = current_score;
+        else if(mole.who === 's'){
+          combo += 1;
+          currentScore += 5 * (1 + Math.floor(combo/3));
+        }
+        showCombo.innerHTML = combo;
+        showScore.innerHTML = currentScore;
+        if (combo >= maxCombo){
+          maxCombo = combo;
+          showMaxCombo.innerHTML = maxCombo;
+        }
       } 
     }
 
@@ -353,7 +447,43 @@ window.onload = function() {
           }
         }
       }, 80)
+    }
+    // restart a new game
+    function restart() {
+      restartButton.onclick = function() {
+        // hide restart button 
+        this.style.display = 'none';
+        gameoverBox.style.display = 'none';
+        // refill timer and HP bars
+        timeboxWidth = 202;
+        timebox.style.width = timeboxWidth + 'px';
+        HPboxWidth = 202;
+        HPbox.style.width = timeboxWidth + 'px';
+        
+        currentScore = 0;
+        maxCombo = 0;
+        combo = 0;
+        iron = 0;
+        copper = 0;
+        ruby = 0;
+        blackGem = 0;
+        sapphire = 0;
+        diamond = 0;
+        treasure = 0;
 
+        showScore.innerHTML = currentScore;
+        showMaxCombo.innerHTML = maxCombo;
+        showCombo.innerHTML = combo;
+        showIron.innerHTML = iron;
+        showCopper.innerHTML = copper;
+        showRuby.innerHTML = ruby;
+        showBlackGem.innerHTML = blackGem;
+        showSapphire.innerHTML = sapphire;
+        showDiamond.innerHTML = diamond;
+        showTreasure.innerHTML = treasure;
+        timeReduce();
+        showMole();
+      }
 
     }
 }

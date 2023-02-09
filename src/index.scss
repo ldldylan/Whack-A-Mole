@@ -2,6 +2,8 @@
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
 \*************************************************************************************************************************************/
 .title {
+    font-family: 'Inter', sans-serif;
+    font-family: 'Lora', serif;
     margin: 0 auto;
     text-align: center;
 }
@@ -32,20 +34,45 @@ body {
 
 .box div {
     position: absolute;
+    font-family: 'Inter', sans-serif;
+    font-family: 'Lora', serif;
+}
+
+.HP_label {
+    color: white;
+    font-size: 23pt;
+    font-weight: bold;
+    top: 3%;
+    left: 75%;
+}
+.HP_img {
+    background: url(../img/timer.png) no-repeat;
+    width: 240px;
+    height: 76px;
+    top: 1%;
+    left: 81%;
+    position: relative;
+}
+.HP {
+    width: 202px;
+    height: 36px;
+    background: red;
+    top: 3.2%;
+    left: 82.5%;
 }
 
 .time_label {
     color: white;
     font-size: 30px;
     font-weight: bold;
-    top: 7%;
+    top: 10.2%;
     left: 75%;
 }
 .time_img {
     background: url(../img/timer.png) no-repeat;
     width: 240px;
-    height: 100%;
-    top: 5%;
+    height: 76px;
+    top: 8.2%;
     left: 81%;
     position: relative;
 }
@@ -53,15 +80,31 @@ body {
     width: 202px;
     height: 36px;
     background: blue;
-    top: 7.2%;
+    top: 10.3%;
     left: 82.5%;
+}
+
+.best_score_label {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    top: 15.8%;
+    left: 75%;
+}
+
+.best_score {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    top: 16.1%;
+    left: 90%;
 }
 
 .score_label {
     color: white;
     font-size: 30px;
     font-weight: bold;
-    top: 13%;
+    top: 19.3%;
     left: 75%;
 }
 
@@ -69,27 +112,186 @@ body {
     color: white;
     font-size: 30px;
     font-weight: bold;
-    top: 13.3%;
-    left: 85%;
+    top: 19.6%;
+    left: 90%;
 }
 
-.pause {
-    width: 257px;
-    height: 115px;
-    background: url(../img/pause.png);
-    top: 75%;
-    left: 15%;
+.max_combo_label {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    top: 22.8%;
+    left: 75%;
 }
 
+.max_combo {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    top: 23.1%;
+    left: 90%;
+}
+
+.combo_label {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    top: 26.3%;
+    left: 75%;
+}
+
+.combo {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    top: 26.6%;
+    left: 90%;
+}
+
+.iron_label {
+    color: RGB(100,100,92);
+    font-size: 30px;
+    font-weight: bold;
+    top: 33%;
+    left: 75%;
+}
+
+.iron {
+    color: RGB(100,100,92);
+    font-size: 30px;
+    font-weight: bold;
+    top: 33.3%;
+    left: 90%;
+}
+
+.copper_label {
+    color: RGB(112,65,34);
+    font-size: 30px;
+    font-weight: bold;
+    top: 36.5%;
+    left: 75%;
+}
+
+.copper {
+    color: RGB(112,65,34);
+    font-size: 30px;
+    font-weight: bold;
+    top: 36.8%;
+    left: 90%;
+}
+
+.ruby_label {
+    color: RGB(219,45,46);
+    font-size: 30px;
+    font-weight: bold;
+    top: 40%;
+    left: 75%;
+}
+
+.ruby {
+    color: RGB(219,45,46);
+    font-size: 30px;
+    font-weight: bold;
+    top: 40.3%;
+    left: 90%;
+}
+
+.black_gem_label {
+    color: RGB(22,22,22);
+    font-size: 30px;
+    font-weight: bold;
+    top: 43.5%;
+    left: 75%;
+}
+
+.black_gem {
+    color: RGB(22,22,22);
+    font-size: 30px;
+    font-weight: bold;
+    top: 43.8%;
+    left: 90%;
+}
+
+.sapphire_label {
+    color: RGB(87,163,180);
+    font-size: 30px;
+    font-weight: bold;
+    top: 47%;
+    left: 75%;
+}
+
+.sapphire {
+    color: RGB(87,163,180);
+    font-size: 30px;
+    font-weight: bold;
+    top: 47.3%;
+    left: 90%;
+}
+
+.diamond_label {
+    color: RGB(246,246,254);
+    font-size: 30px;
+    font-weight: bold;
+    top: 50.5%;
+    left: 75%;
+}
+
+.diamond {
+    color: RGB(246,246,254);
+    font-size: 30px;
+    font-weight: bold;
+    top: 50.8%;
+    left: 90%;
+}
+
+.treasure_label {
+    color: RGB(255,255,0);
+    font-size: 30px;
+    font-weight: bold;
+    top: 54%;
+    left: 75%;
+}
+
+.treasure {
+    color: RGB(255,255,0);
+    font-size: 30px;
+    font-weight: bold;
+    top: 54.3%;
+    left: 90%;
+}
 .start {
-    width: 257px;
-    height: 115px;
-    background: url(../img/restart.png) no-repeat;
+    width: 276px;
+    height: 92px;
+    background: url(../img/start.png) no-repeat;
     background-size: cover;
     top: 75%;
     left: 15%;
     /* position: relative; */
 }
+.pause {
+    width: 276px;
+    height: 92px;
+    background: url(../img/pause.png);
+    top: 75%;
+    left: 15%;
+}
+.resume {
+    display: none;
+    width: 276px;
+    height: 92px;
+    background: url(../img/resume.png);
+    top: 75%;
+    left: 15%;
+}
+
+.restart {
+    width: 276px;
+    height: 92px;
+    background: url(../img/restart.png);
+    top: 75%;
+    left: 45%;
+}
+
 
 .gameover, .restart, .pause {
     display: none;
