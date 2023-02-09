@@ -286,7 +286,6 @@ body {
 }
 
 .resume {
-  display: none;
   width: 276px;
   height: 92px;
   background: url(../img/resume.png);
@@ -299,10 +298,10 @@ body {
   height: 92px;
   background: url(../img/restart.png);
   top: 75%;
-  left: 45%;
+  left: 15%;
 }
 
-.gameover, .restart, .pause {
+.gameover, .restart, .pause, .resume {
   display: none;
 }
 

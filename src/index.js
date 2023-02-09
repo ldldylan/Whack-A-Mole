@@ -22,7 +22,7 @@ window.onload = function() {
 
     const startButton = document.querySelector('.start');
     const pauseButton = document.querySelector('.pause');
-    const resumeButton = document.querySelector('resume');
+    const resumeButton = document.querySelector('.resume');
     const restartButton = document.querySelector('.restart');
     const gameoverBox = document.querySelector('.gameover');
 
@@ -110,7 +110,13 @@ window.onload = function() {
               showBestScore.innerHTML = bestScore;
             }
             if (timeboxWidth <= 0 || HPboxWidth <= 0){
-                if (HPboxWidth <= 0)HPbox.style.width = 0 + 'px';
+                if (HPboxWidth <= 0) {
+                  HPbox.style.width = 0 + 'px';
+                  if (hasSound) {
+                    const defeatSound = new Audio("audio/defeat.mp3")
+                    defeatSound.play();
+                  }
+                }
                 clearInterval(timer);
 
 
@@ -119,13 +125,14 @@ window.onload = function() {
                 // gamer over
                 gameover();
             }
-        }, 300)
+        }, 30)
     }
 
     // 4. game over
     function gameover() {
-        restartButton.style.display="block";
-        gameoverBox.style.display="block";
+        restartButton.style.display = "block";
+        pauseButton.style.display = 'none';
+        gameoverBox.style.display = "block";
         
         // while (box.firstChild){
           // console.log(box.array)
@@ -137,6 +144,12 @@ window.onload = function() {
         if (currentScore > bestScore) {
           bestScore = currentScore;
           showBestScore.innerHTML = bestScore;
+        }
+        if (currentScore > 5000 || combo > 30) {
+          if (hasSound) {
+            const victorySound = new Audio("audio/victory.mp3");
+            victorySound.play();
+          }
         }
         // stop generaing any mole
         clearInterval(moleTimer);
@@ -161,24 +174,29 @@ window.onload = function() {
     }
     // 5. pause game
     pauseButton.onclick = function(){
-        if(gameState) {
-            // pause game timer
-            clearInterval(timer);
-            // pause generating mole
-            clearInterval(moleTimer);
-            // pause button => continue button
-            this.style.backgroundImage="url(img/resume.png)"
-            gameState = false;
-          }
-          else{
-            // start timer
-            timeReduce();
-            showMole();
-            // start button => pause button
-            this.style.backgroundImage="url(img/pause.png)"
-            gamestate = true;
-        }
+      // pause game timer
+      clearInterval(timer);
+      // pause generating mole
+      clearInterval(moleTimer);
+      // hide pause button
+      pauseButton.style.display = 'none';
+      // show resume button
+      resumeButton.style.display = 'block';
     }
+
+    // 5.b resume game 
+    resumeButton.onclick = function() {
+      // hide resume button
+      resumeButton.style.display = 'none';
+      // hide pause button
+      pauseButton.style.display = 'block';
+      // resume timer
+      timeReduce(); 
+      // resume mole genertor
+      showMole();
+    }
+
+    // }
     // 6. generate mole
     async function addMole() {
       // create imge
@@ -453,6 +471,7 @@ window.onload = function() {
       restartButton.onclick = function() {
         // hide restart button 
         this.style.display = 'none';
+        pauseButton.style.display = 'block';
         gameoverBox.style.display = 'none';
         // refill timer and HP bars
         timeboxWidth = 202;
