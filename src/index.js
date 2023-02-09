@@ -125,7 +125,7 @@ window.onload = function() {
                 // gamer over
                 gameover();
             }
-        }, 30)
+        }, 300)
     }
 
     // 4. game over
