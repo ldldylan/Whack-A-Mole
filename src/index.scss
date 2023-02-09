@@ -596,3 +596,18 @@ body {
     top: 39.6%;
     left: 53%;
 }
+
+.level_2 {
+    width: 276px;
+    // width: 21.5625%;
+    height: 92px;
+    // height: 9.583333%;
+    display: none;
+    // align-items: flex-start;
+    background: url(../img/level2.png) no-repeat;
+    background-size: auto;
+    top: 52%;
+    left: 27%;
+    /* position: relative; */
+    z-index: 1;
+}

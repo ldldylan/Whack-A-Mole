@@ -2,10 +2,10 @@ const { has } = require("immutable");
 const { async } = require("regenerator-runtime");
 
 let bestScore = 0;
-
+let level = 1;
 // sound effect 
 let hasSound = false;
-
+let speed = 1000;
 window.onload = function() {
     // 1. Initializing game elements
     const splash = document.querySelector('.splash')
@@ -39,7 +39,7 @@ window.onload = function() {
     const unmuteMusicButton = document.querySelector(".unmute-music");
     const muteSoundButton = document.querySelector(".mute-sound");
     const muteMusicButton = document.querySelector(".mute-music");
-
+    const level2Button = document.querySelector(".level_2")
 
     let timer = null;
     let timeboxWidth = timebox.offsetWidth;
@@ -124,6 +124,12 @@ window.onload = function() {
 
     // 2. Start game after clicking the start button
     startButton.onclick = function(){
+      if (level === 1) {
+        speed = 1000;
+      }
+      else if (level === 2) {
+        speed = 700;
+      }
         // hide start button after clicked
         startButton.style.display = 'none';
         splash.style.display = 'none';
@@ -181,11 +187,12 @@ window.onload = function() {
         bestScore = currentScore;
         showBestScore.innerHTML = bestScore;
       }
-      if (currentScore > 5000 || combo > 30) {
+      if (currentScore > 4000 || combo > 30) {
         if (hasSound) {
           const victorySound = new Audio("audio/victory.mp3");
           victorySound.play();
         }
+        level2Button.style.display = 'block';
       }
       // stop generaing any mole
       clearInterval(moleTimer);
@@ -322,7 +329,7 @@ window.onload = function() {
               showCombo.innerHTML = combo; 
             }
           }, 80)
-        }, 1000)
+        }, speed)
       }
       else if (mole.who === 'f'){
         downIndex = 2;
@@ -338,7 +345,7 @@ window.onload = function() {
               box.removeChild(mole);
             }
           }, 80)
-        }, 1000)
+        }, speed)
       }
       else if (mole.who === 's'){
         downIndex = 1;
@@ -351,7 +358,13 @@ window.onload = function() {
             const snakeSound= new Audio("audio/snake-attack.mp3");
             snakeSound.play();
             if (downIndex < 0){
-              HPboxWidth -= 68;
+              if (level === 1) {
+                HPboxWidth -= 68;
+              }
+              else if (level === 2) {
+                HPboxWidth -= 101;
+              }
+                
               HPbox.style.width = HPboxWidth + 'px';
               clearInterval(downTimer);
               clearInterval(mole.out);
@@ -361,7 +374,7 @@ window.onload = function() {
               showCombo.innerHTML = combo; 
             }
           }, 200)
-        }, 1000)
+        }, speed)
       }
     }
 
@@ -540,6 +553,43 @@ window.onload = function() {
         showMole();
       }
 
+    }
+
+    level2Button.onclick = function() {
+      level = 2;
+      level2Button.style.display = 'none';
+      restartButton.style.display = 'none';
+      pauseButton.style.display = 'block';
+      gameoverBox.style.display = 'none';
+      // refill timer and HP bars
+      timeboxWidth = 202;
+      timebox.style.width = timeboxWidth + 'px';
+      HPboxWidth = 202;
+      HPbox.style.width = timeboxWidth + 'px';
+      
+      currentScore = 0;
+      maxCombo = 0;
+      combo = 0;
+      iron = 0;
+      copper = 0;
+      ruby = 0;
+      blackGem = 0;
+      sapphire = 0;
+      diamond = 0;
+      treasure = 0;
+
+      showScore.innerHTML = currentScore;
+      showMaxCombo.innerHTML = maxCombo;
+      showCombo.innerHTML = combo;
+      showIron.innerHTML = iron;
+      showCopper.innerHTML = copper;
+      showRuby.innerHTML = ruby;
+      showBlackGem.innerHTML = blackGem;
+      showSapphire.innerHTML = sapphire;
+      showDiamond.innerHTML = diamond;
+      showTreasure.innerHTML = treasure;
+      timeReduce();
+      showMole();
     }
 }
 
