@@ -187,7 +187,7 @@ window.onload = function() {
         bestScore = currentScore;
         showBestScore.innerHTML = bestScore;
       }
-      if (currentScore > 4000 || combo > 30) {
+      if (currentScore >= 3000 || combo >= 25) {
         if (hasSound) {
           const victorySound = new Audio("audio/victory.mp3");
           victorySound.play();
