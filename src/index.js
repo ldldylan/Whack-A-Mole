@@ -1,8 +1,14 @@
+const { has } = require("immutable");
 const { async } = require("regenerator-runtime");
 
 let bestScore = 0;
+
+// sound effect 
+let hasSound = false;
+
 window.onload = function() {
     // 1. Initializing game elements
+    const splash = document.querySelector('splash')
     const box = document.querySelector('.box');
     const showScore = document.querySelector('.score');
     const showBestScore = document.querySelector('.best_score');
@@ -26,6 +32,12 @@ window.onload = function() {
     const restartButton = document.querySelector('.restart');
     const gameoverBox = document.querySelector('.gameover');
 
+    const unmuteSoundButton = document.querySelector(".unmute-sound")
+    const unmuteMusicButton = document.querySelector(".unmute-music")
+    const muteSoundButton = document.querySelector(".mute-sound")
+    const muteMusicButton = document.querySelector(".mute-music")
+
+
     let timer = null;
     let timeboxWidth = timebox.offsetWidth;
     let HPboxWidth = HPbox.offsetWidth;
@@ -44,7 +56,7 @@ window.onload = function() {
     let treasure = 0;
 
     // ture => game has started; false => game is paused
-    let gameState = true;
+    // let gameState = true;
 
     // seven positions for moles to show up [{}{}{}{}{}{}{}]
     let sevenMolesPos = [
@@ -77,16 +89,35 @@ window.onload = function() {
     let upTimer = null;
     // mole goes down 
     let downTimer = null;
-
-    // sound effect 
-    let hasSound = true;
-    // background music
-    // let hasBGM = true;
-    // const BGM = new Audio("audio/BGM.mp3");
-    // BGM.loop = true;
-    // BGM.play();
-
     
+    // 1b. mute/unmute sound effect and music
+    unmuteSoundButton.onclick = function(){
+      unmuteSoundButton.style.display = 'None';
+      muteSoundButton.style.display = 'block';
+      hasSound = true;
+    }
+
+    muteSoundButton.onclick = function() {
+      muteSoundButton.style.display = 'None';
+      unmuteSoundButton.style.display = 'block';
+      hasSound = false;
+    }
+
+    const BGM = new Audio("audio/BGM.mp3");
+    BGM.loop = true;
+    
+    unmuteMusicButton.onclick = function(){
+      unmuteMusicButton.style.display = 'None';
+      muteMusicButton.style.display = 'block';
+      BGM.play();
+    }
+
+    muteMusicButton.onclick = function() {
+      muteMusicButton.style.display = 'None';
+      unmuteMusicButton.style.display = 'block';
+      // BGM.volume = 0;
+      BGM.pause();
+    }
 
     // 2. Start game after clicking the start button
     startButton.onclick = function(){
@@ -118,8 +149,6 @@ window.onload = function() {
                   }
                 }
                 clearInterval(timer);
-
-
                 clearInterval(moleTimer);
                 clearInterval(downTimer);
                 // gamer over

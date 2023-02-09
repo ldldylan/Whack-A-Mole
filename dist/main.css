@@ -9,6 +9,9 @@
   font-family: "Lora", serif;
   margin: 0 auto;
   text-align: center;
+  color: aliceblue;
+  height: 80px;
+  font-size: 60px;
 }
 
 * {
@@ -17,7 +20,10 @@
 }
 
 body {
-  background: yellowgreen;
+  background: rgb(230, 206, 123);
+  background: rgb(148, 123, 16);
+  background: rgb(132, 115, 16);
+  background: rgb(0, 0, 0);
 }
 
 .box {
@@ -271,7 +277,7 @@ body {
   width: 276px;
   height: 92px;
   background: url(../img/start.png) no-repeat;
-  background-size: cover;
+  background-size: auto;
   top: 75%;
   left: 15%;
   /* position: relative; */
@@ -303,6 +309,58 @@ body {
 
 .gameover, .restart, .pause, .resume {
   display: none;
+}
+
+.unmute-sound {
+  width: 88px;
+  height: 87px;
+  display: block;
+  background: url(../img/unmute-sound-effect.png);
+  top: 75.5%;
+  left: 45%;
+}
+
+.unmute-music {
+  width: 88px;
+  height: 87px;
+  display: block;
+  background: url(../img/unmute-music.png);
+  top: 75.5%;
+  left: 60%;
+}
+
+.mute-sound {
+  width: 88px;
+  height: 87px;
+  display: none;
+  background: url(../img/mute-sound-effect.png);
+  top: 75.5%;
+  left: 45%;
+}
+
+.mute-music {
+  width: 88px;
+  height: 87px;
+  display: none;
+  background: url(../img/mute-music.png);
+  top: 75.5%;
+  left: 60%;
+}
+
+.github-icon {
+  width: 60px;
+  height: 60px;
+  display: block;
+  top: 77%;
+  left: 94.5%;
+}
+
+.linkedin-icon {
+  width: 60px;
+  height: 60px;
+  display: block;
+  top: 85%;
+  left: 94.5%;
 }
 
 /* .continue {
