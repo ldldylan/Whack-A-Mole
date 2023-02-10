@@ -1,4 +1,5 @@
 # Whack-A-Mole
+[Click to play!](https://ldldylan.github.io/Whack-A-Mole/)
 #### A JavaScript game built on the classic arcade game Whack A Mole!<img src="https://s2.loli.net/2023/02/03/K1EcOexajhCWzIM.webp" >
 
 ## Background 
