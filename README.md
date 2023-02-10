@@ -14,7 +14,7 @@
 As a miner and treasure seeker, you discover abundant mineral veins in a small village. However, the mine is plagued by moles and snakes. Your job is to whack moles to collect mine or whack snakes before they bite you. Try to collect as many mines as you can within the limited time and go to the next level.  
 
 ## Features
-### **Smooth Animation and Real-time Game Data
+### **Smooth Animation and Real-time Game Data**
 ![](/img/gameplay.gif)
 * Use mouse clicking to whack a mole to collect mine or treasure
 * Keep track of HP, remaining time, best score, current score, max combos, current combos, and so on.
