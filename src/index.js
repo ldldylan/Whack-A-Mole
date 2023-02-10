@@ -355,8 +355,10 @@ window.onload = function() {
             mole.src = "img/s4.png";
             downIndex --;
             // snake bite sound
-            const snakeSound= new Audio("audio/snake-attack.mp3");
-            snakeSound.play();
+            if (hasSound) {
+              const snakeSound= new Audio("audio/snake-attack.mp3");
+              snakeSound.play();
+            }
             if (downIndex < 0){
               if (level === 1) {
                 HPboxWidth -= 68;
