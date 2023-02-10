@@ -5,7 +5,7 @@ let bestScore = 0;
 let level = 1;
 // sound effect 
 let hasSound = false;
-let speed = 1000;
+let presenceTime = 1000;
 window.onload = function() {
     // 1. Initializing game elements
     const splash = document.querySelector('.splash')
@@ -125,10 +125,10 @@ window.onload = function() {
     // 2. Start game after clicking the start button
     startButton.onclick = function(){
       if (level === 1) {
-        speed = 1000;
+        presenceTime = 1000;
       }
       else if (level === 2) {
-        speed = 700;
+        presenceTime = 700;
       }
         // hide start button after clicked
         startButton.style.display = 'none';
@@ -329,7 +329,7 @@ window.onload = function() {
               showCombo.innerHTML = combo; 
             }
           }, 80)
-        }, speed)
+        }, presenceTime)
       }
       else if (mole.who === 'f'){
         downIndex = 2;
@@ -345,7 +345,7 @@ window.onload = function() {
               box.removeChild(mole);
             }
           }, 80)
-        }, speed)
+        }, presenceTime)
       }
       else if (mole.who === 's'){
         downIndex = 1;
@@ -376,7 +376,7 @@ window.onload = function() {
               showCombo.innerHTML = combo; 
             }
           }, 200)
-        }, speed)
+        }, presenceTime)
       }
     }
 
