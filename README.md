@@ -19,6 +19,9 @@ As a miner and treasure seeker, you discover abundant mineral veins in a small v
 * Use mouse clicking to whack a mole to collect mine or treasure
 * Keep track of HP, remaining time, best score, current score, max combos, current combos, and so on.
 
+### **Touching Function Supported**
+![](/img/iPad-gameplay.gif)
+* Compatible with an iPad, a tablet or a touch screen
 <!-- * Select the difficulty of the game -->
 
 <!-- * Interact with some buttons to mute or unmute the sound effects and the background music -->
